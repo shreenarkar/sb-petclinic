@@ -101,7 +101,7 @@ The following items should be installed in your system:
   - [IntelliJ IDEA](https://www.jetbrains.com/idea/)
   - [VS Code](https://code.visualstudio.com)
 
-### Steps
+### Step
 
 1. On the command line run:
 
