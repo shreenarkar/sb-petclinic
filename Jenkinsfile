@@ -20,9 +20,9 @@ pipeline {
         }
 
         stage('Upload to S3') {
-            steps {
-                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-access-key-id']]) {
-                    bat 'for /f %f in (\'dir /b target\\*.jar\') do aws s3 cp target\\%f s3://%S3_BUCKET%/ --region %AWS_REGION%'
+    steps {
+        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-access-key-id']]) {
+            bat 'for %%f in (target\\*.jar) do aws s3 cp "%%f" s3://jenkins-pipeline-sb-petclinic/ --region ap-south-1'
                 }
             }
         }
