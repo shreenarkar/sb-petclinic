@@ -4,6 +4,7 @@ pipeline {
     environment {
         AWS_REGION = 'ap-south-1'
         S3_BUCKET = 'jenkins-pipeline-sb-petclinic'
+        EC2_IP = '<EC2_PUBLIC_IP>' // Replace with actual IP
     }
 
     stages {
@@ -27,8 +28,8 @@ pipeline {
             }
         }
 
-        stage('Upload to S3')
-            when{
+        stage('Upload to S3') {
+            when {
                 branch 'main'
             }
             steps {
@@ -44,9 +45,9 @@ pipeline {
             }
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'my-ec2-key', keyFileVariable: 'KEY_FILE')]) {
-                    sh '''
-                        scp -i $KEY_FILE target/*.jar ec2-user@<EC2_PUBLIC_IP>:/home/ec2-user/app.jar
-                        ssh -i $KEY_FILE ec2-user@<EC2_PUBLIC_IP> 'nohup java -jar /home/ec2-user/app.jar > output.log 2>&1 &'
+                    bat '''
+                        pscp -i %KEY_FILE% target\\*.jar ubuntu@13.201.89.248:/home/ec2-user/app.jar
+                        plink -i %KEY_FILE% ubuntu@13.201.89.248 "nohup java -jar /home/ec2-user/app.jar"
                     '''
                 }
             }
