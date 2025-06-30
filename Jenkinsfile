@@ -27,8 +27,8 @@ pipeline {
             }
         }
 
-        stage('Upload to S3') {
-            when {
+        stage('Upload to S3')
+            when{
                 branch 'main'
             }
             steps {
