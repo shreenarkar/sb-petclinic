@@ -44,7 +44,7 @@ pipeline {
                 branch 'main'
             }
             steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'my-ec2-key', keyFileVariable: 'KEY_FILE')]) {
+                withCredentials([file(credentialsId: 'my-ec2-key', variable: 'KEY_FILE')]) {
                     bat '''
                         pscp -i %KEY_FILE% target\\*.jar ubuntu@13.201.89.248:/home/ec2-user/app.jar
                         plink -i %KEY_FILE% ubuntu@13.201.89.248 "nohup java -jar /home/ec2-user/app.jar"
