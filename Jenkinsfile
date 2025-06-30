@@ -45,14 +45,14 @@ pipeline {
             }
             steps {
                 
-                withCredentials([sshUserPrivateKey(credentialsId: 'my-ec2-key', keyFileVariable: 'KEY_FILE')]){
+        
                 
                     bat '''
                         dir
-                        pscp -i %KEY_FILE% target\\spring-petclinic-3.5.0-SNAPSHOT.jar ubuntu@13.201.89.248:/home/ubuntu/app.jar
-                        plink -i %KEY_FILE% ubuntu@13.201.89.248 "nohup java -jar /home/ubuntu/app.jar"
+                        pscp -batch -i .\\sb.petclinic.ppk target\\spring-petclinic-3.5.0-SNAPSHOT.jar ubuntu@13.201.89.248:/home/ubuntu/app.jar
+                        plink -i .\\sb.petclinic.ppk "nohup java -jar /home/ubuntu/app.jar"
                     '''
-                }
+                
             }
         }
     }
