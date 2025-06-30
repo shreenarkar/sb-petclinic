@@ -44,13 +44,13 @@ pipeline {
                 branch 'main'
             }
             steps {
-                withCredentials([file(credentialsId: 'my-ec2-key', variable: 'KEY_FILE')]) {
+                
                     bat '''
 
                         pscp -i E:\\sb.petclinic.ppk target\\spring-petclinic-3.5.0-SNAPSHOT.jar ubuntu@13.201.89.248:/home/ubuntu/app.jar
                         plink -i E:\\sb-petclinic.ppk ubuntu@13.201.89.248 "nohup java -jar /home/ubuntu/app.jar"
                     '''
-                }
+                
             }
         }
     }
