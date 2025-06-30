@@ -28,7 +28,7 @@ pipeline {
         }
 
         stage('Upload to S3') {
-            when{
+            when {
                 branch 'main'
             }
             steps {
@@ -37,14 +37,28 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy to EC2') {
+            when {
+                branch 'main'
+            }
+            steps {
+                withCredentials([sshUserPrivateKey(credentialsId: 'my-ec2-key', keyFileVariable: 'KEY_FILE')]) {
+                    sh '''
+                        scp -i $KEY_FILE target/*.jar ec2-user@<EC2_PUBLIC_IP>:/home/ec2-user/app.jar
+                        ssh -i $KEY_FILE ec2-user@<EC2_PUBLIC_IP> 'nohup java -jar /home/ec2-user/app.jar > output.log 2>&1 &'
+                    '''
+                }
+            }
+        }
     }
 
     post {
         success {
-            echo '✅ Build and upload successful.'
+            echo '✅ Build, test, analysis, upload, and deploy successful.'
         }
         failure {
-            echo '❌ Pipeline failed.'
+            echo '❌ Pipeline failed. Please check the logs.'
         }
     }
 }
