@@ -46,7 +46,7 @@ pipeline {
             steps {
                 withCredentials([file(credentialsId: 'my-ec2-key', variable: 'KEY_FILE')]) {
                     bat '''
-                        if exist target\spring-petclinic-3.5.0-SNAPSHOT.jar (
+                        if exist target\\spring-petclinic-3.5.0-SNAPSHOT.jar (
                             echo File found.
                         ) else (
                             echo ❌ JAR not found in target folder.
