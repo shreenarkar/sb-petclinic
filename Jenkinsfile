@@ -50,10 +50,16 @@ pipeline {
                 bat '''
                         
                     pscp -i E:\\sb-petclinic.ppk target\\spring-petclinic-3.5.0-SNAPSHOT.jar ubuntu@13.201.89.248:/home/ubuntu/app.jar
-                    plink -i E:\\sb-petclinic.ppk ubuntu@%EC2_IP% ^
-                    "(pkill -f app.jar || true && while pgrep -f app.jar > /dev/null; do sleep 1; done && nohup java -jar /home/ubuntu/app.jar > app.log 2>&1 &) && sleep 2"
+                    echo 🔄 Killing old app...
+                    plink -i E:\\sb-petclinic.ppk ubuntu@%EC2_IP% "pkill -f app.jar || true"
 
-                    '''
+                    echo 💤 Waiting for process to exit...
+                    plink -i E:\\sb-petclinic.ppk ubuntu@%EC2_IP% "while pgrep -f app.jar > /dev/null; do sleep 1; done"
+
+                    echo 🚀 Starting app...
+                    plink -i E:\\sb-petclinic.ppk ubuntu@%EC2_IP% "nohup java -jar /home/ubuntu/app.jar > app.log 2>&1 &"
+
+                '''
                 
             }
         }
