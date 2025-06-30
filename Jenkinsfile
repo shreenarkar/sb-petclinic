@@ -50,7 +50,7 @@ pipeline {
                     bat '''
                         
                         pscp -i E:\\sb-petclinic.ppk target\\spring-petclinic-3.5.0-SNAPSHOT.jar ubuntu@13.201.89.248:/home/ubuntu/app.jar
-                        plink -i E:\\sb-petclinic.ppk ubuntu@13.201.89.248 "nohup java -jar /home/ubuntu/app.jar"
+                        plink -i E:\\sb-petclinic.ppk ubuntu@13.201.89.248 "pkill -f app.jar || true && sleep 5 && nohup java -jar /home/ubuntu/app.jar > app.log 2>&1 &"
                     '''
                 
             }
