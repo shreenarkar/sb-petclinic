@@ -46,7 +46,7 @@ pipeline {
             steps {
                 withCredentials([file(credentialsId: 'my-ec2-key', variable: 'KEY_FILE')]) {
                     bat '''
-                        pscp -i %KEY_FILE% spring-petclinic-3.5.0-SNAPSHOT.jar ubuntu@13.201.89.248:/home/ubuntu/app.jar
+                        pscp -i %KEY_FILE% target\\spring-petclinic-3.5.0-SNAPSHOT.jar ubuntu@13.201.89.248:/home/ubuntu/app.jar
                         plink -i %KEY_FILE% ubuntu@13.201.89.248 "nohup java -jar /home/ubuntu/app.jar"
                     '''
                 }
