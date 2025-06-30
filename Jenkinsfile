@@ -4,7 +4,7 @@ pipeline {
     environment {
         AWS_REGION = 'ap-south-1'
         S3_BUCKET = 'jenkins-pipeline-sb-petclinic'
-        EC2_IP = '<EC2_PUBLIC_IP>' // Replace with actual IP
+        EC2_IP = '13.201.89.248' // Replace with actual IP
     }
 
     stages {
