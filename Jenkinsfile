@@ -44,8 +44,8 @@ pipeline {
                 branch 'main'
             }
             steps {
-                {
-                withCredentials([sshUserPrivateKey(credentialsId: 'my-ec2-key', keyFileVariable: 'KEY_FILE')])
+                
+                withCredentials([sshUserPrivateKey(credentialsId: 'my-ec2-key', keyFileVariable: 'KEY_FILE')]){
                 
                     bat '''
                         dir
