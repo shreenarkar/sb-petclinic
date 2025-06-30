@@ -49,8 +49,9 @@ pipeline {
                 
                     bat '''
                         dir
-                        pscp -i C:\\ProgramData\\Jenkins\\.jenkins\\secrets\\PETCLINIC.ppk target\\spring-petclinic-3.5.0-SNAPSHOT.jar ubuntu@13.201.89.248:/home/ubuntu/app.jar
-                        plink -i C:\\ProgramData\\Jenkins\\.jenkins\\secrets\\PETCLINIC.ppk "nohup java -jar /home/ubuntu/app.jar"
+                        telnet 13.201.89.248 22
+                        pscp -i C:\\JenkinsKeys\\sb-petclinic.ppk target\\spring-petclinic-3.5.0-SNAPSHOT.jar ubuntu@13.201.89.248:/home/ubuntu/app.jar
+                        plink -i C:\\JenkinsKeys\\sb-petclinic.ppk "nohup java -jar /home/ubuntu/app.jar"
                     '''
                 
             }
