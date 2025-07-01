@@ -142,7 +142,7 @@ GitHub org is the "canonical" implementation based on Spring Boot and Thymeleaf.
 [quite a few forks](https://spring-petclinic.github.io/docs/forks.html) in the GitHub org
 [spring-petclinic](https://github.com/spring-petclinic). If you are interested in using a different technology stack to implement the Pet Clinic, please join the community there.
 
-## Interaction with other open-source projects
+## Interaction with other open-source projects hello there
 
 One of the best parts about working on the Spring Petclinic application is that we have the opportunity to work in direct contact with many Open Source projects. We found bugs/suggested improvements on various topics such as Spring, Spring Data, Bean Validation and even Eclipse! In many cases, they've been fixed/implemented in just a few days.
 Here is a list of them:
