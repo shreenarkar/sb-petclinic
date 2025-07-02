@@ -4,7 +4,7 @@ pipeline {
     environment {
         AWS_REGION = 'ap-south-1'
         S3_BUCKET = 'jenkins-pipeline-sb-petclinic'
-        EC2_IP = '13.201.89.248' // Replace with actual IP
+        EC2_IP = '13.235.80.153'
     }
 
     stages {
@@ -34,7 +34,7 @@ pipeline {
             }
             steps {
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-access-key-id']]) {
-                    bat 'for %%f in (target\\*.jar) do aws s3 cp "%%f" s3://jenkins-pipeline-sb-petclinic/ --region ap-south-1'
+                    bat 'for %%f in (target\\*.jar) do aws s3 cp "%%f" %S3_BUCKET% --region %AWS_REGION%'
                 }
             }
         }
