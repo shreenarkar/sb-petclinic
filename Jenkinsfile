@@ -9,18 +9,39 @@ pipeline {
 
     stages {
         stage('Build') {
+            {
+                when {
+                    not {
+                        branch 'main'
+                    }
+                }
+            }
             steps {
                 bat 'mvn clean package -DskipTests'
             }
         }
 
         stage('Test') {
+            {
+                when {
+                    not {
+                        branch 'main'
+                    }
+                }
+            }
             steps {
                 bat 'mvn test'
             }
         }
 
         stage('SonarQube Analysis') {
+            {
+                when {
+                    not{
+                        branch 'main'
+                    }
+                }
+            }
             steps {
                 withSonarQubeEnv('MySonar') {
                     bat 'mvn sonar:sonar -Dsonar.projectKey=sb-petclinic -Dsonar.projectName=sb-petclinic -Dsonar.host.url=http://localhost:9000'
@@ -34,7 +55,7 @@ pipeline {
             }
             steps {
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-access-key-id']]) {
-                    bat 'for %%f in (target\\*.jar) do aws s3 cp "%%f" %S3_BUCKET% --region %AWS_REGION%'
+                    bat 'for %%f in (target\\*.jar) do aws s3 cp "%%f" s3://%S3_BUCKET% --region %AWS_REGION%'
                 }
             }
         }
