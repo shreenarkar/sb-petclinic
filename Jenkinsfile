@@ -9,11 +9,9 @@ pipeline {
 
     stages {
         stage('Build') {
-            {
-                when {
-                    not {
-                        branch 'main'
-                    }
+            when {
+                not {
+                    branch 'main'
                 }
             }
             steps {
@@ -22,11 +20,9 @@ pipeline {
         }
 
         stage('Test') {
-            {
-                when {
-                    not {
-                        branch 'main'
-                    }
+            when {
+                not {
+                    branch 'main'
                 }
             }
             steps {
@@ -35,11 +31,9 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
-            {
-                when {
-                    not{
-                        branch 'main'
-                    }
+            when {
+                not {
+                    branch 'main'
                 }
             }
             steps {
@@ -65,18 +59,12 @@ pipeline {
                 branch 'main'
             }
             steps {
-                
-        
-                
                 bat '''
-                        
-                    pscp -i E:\\sb-petclinic.ppk target\\spring-petclinic-3.5.0-SNAPSHOT.jar ubuntu@13.201.89.248:/home/ubuntu/app.jar
+                    pscp -i E:\\sb-petclinic.ppk target\\spring-petclinic-3.5.0-SNAPSHOT.jar ubuntu@%EC2_IP%:/home/ubuntu/app.jar
                     plink -i E:\\sb-petclinic.ppk ubuntu@%EC2_IP% "pkill -f app.jar || true"
-                    plink -i E:\\sb-petclinic.ppk ubuntu@%EC2_IP% "timeout 10 bash -c 'while pgrep -f app.jar > /dev/null; do sleep 1; done'"
+                    plink -i E:\\sb-petclinic.ppk ubuntu@%EC2_IP% "while pgrep -f app.jar > /dev/null; do sleep 1; done"
                     plink -i E:\\sb-petclinic.ppk ubuntu@%EC2_IP% "nohup java -jar /home/ubuntu/app.jar > app.log 2>&1 &"
-
                 '''
-                
             }
         }
     }
