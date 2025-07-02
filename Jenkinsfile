@@ -60,10 +60,10 @@ pipeline {
             }
             steps {
                 bat '''
-                    pscp -i E:\\sb-petclinic.ppk target\\spring-petclinic-3.5.0-SNAPSHOT.jar ubuntu@%EC2_IP%:/home/ubuntu/app.jar
-                    plink -i E:\\sb-petclinic.ppk ubuntu@%EC2_IP% "pkill -f app.jar || true"
-                    plink -i E:\\sb-petclinic.ppk ubuntu@%EC2_IP% "while pgrep -f app.jar > /dev/null; do sleep 1; done"
-                    plink -i E:\\sb-petclinic.ppk ubuntu@%EC2_IP% "nohup java -jar /home/ubuntu/app.jar > app.log 2>&1 &"
+                    pscp -i E:\\sb-petclinic-2.ppk target\\spring-petclinic-3.5.0-SNAPSHOT.jar ubuntu@%EC2_IP%:/home/ubuntu/app.jar
+                    plink -i E:\\sb-petclinic-2.ppk ubuntu@%EC2_IP% "pkill -f app.jar || true"
+                    plink -i E:\\sb-petclinic-2.ppk ubuntu@%EC2_IP% "while pgrep -f app.jar > /dev/null; do sleep 1; done"
+                    plink -i E:\\sb-petclinic-2.ppk ubuntu@%EC2_IP% "nohup java -jar /home/ubuntu/app.jar > app.log 2>&1 &"
                 '''
             }
         }
