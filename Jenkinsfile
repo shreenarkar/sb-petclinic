@@ -61,8 +61,8 @@ pipeline {
             steps {
                 bat '''
                     pscp -i E:\\sb-petclinic-2.ppk target\\spring-petclinic-3.5.0-SNAPSHOT.jar ubuntu@%EC2_IP%:/home/ubuntu/app.jar
-                    plink -i E:\\sb-petclinic-2.ppk ubuntu@%EC2_IP% "pkill -f app.jar || echo 'App not running before deployment'"
-                    plink -i E:\\sb-petclinic-2.ppk ubuntu@%EC2_IP% "if pgrep -f app.jar; then while pgrep -f app.jar > /dev/null; do sleep 1; done; else echo 'App was not running'; fi"
+                    plink -i E:\\sb-petclinic-2.ppk ubuntu@%EC2_IP% "pkill -f 'java.*app.jar' || echo 'App not running before deployment'"
+                    plink -i E:\\sb-petclinic-2.ppk ubuntu@%EC2_IP% "for i in {1..10}; do if pgrep -f 'java.*app.jar'; then echo 'Waiting for app to stop...'; sleep 1; else echo 'App stopped'; break; fi; done"
                     plink -i E:\\sb-petclinic-2.ppk ubuntu@%EC2_IP% "nohup java -jar /home/ubuntu/app.jar > app.log 2>&1 &"
                 '''
 
