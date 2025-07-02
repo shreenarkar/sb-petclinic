@@ -4,7 +4,7 @@ pipeline {
     environment {
         AWS_REGION = 'ap-south-1'
         S3_BUCKET = 'jenkins-pipeline-sb-petclinic'
-        EC2_IP = '13.235.80.153'
+        EC2_IP = '13.201.226.110'
     }
 
     stages {
