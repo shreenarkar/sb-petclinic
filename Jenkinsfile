@@ -49,7 +49,17 @@ pipeline {
             }
             steps {
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-access-key-id']]) {
-                    bat 'for %%f in (target\\*.jar) do aws s3 cp "%%f" s3://%S3_BUCKET% --region %AWS_REGION%'
+                    script {
+                        def timeStamp = new Date().format("yyyyMMdd_HHmm")
+                        def jarName = "spring-petclinic-3.5.0-SNAPSHOT"
+                        def fileName = "${jarName}_${timeStamp}.jar"
+
+                        // Rename jar file with timestamp
+                        bat "copy target\\${jarName}.jar target\\${fileName}"
+
+                        // Upload to S3
+                        bat "aws s3 cp target\\${fileName} s3://%S3_BUCKET% --region %AWS_REGION%"
+                    }
                 }
             }
         }
