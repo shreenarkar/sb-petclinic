@@ -9,33 +9,18 @@ pipeline {
 
     stages {
         stage('Build') {
-            when {
-                not {
-                    branch 'main'
-                }
-            }
             steps {
                 bat 'mvn clean package -DskipTests'
             }
         }
 
         stage('Test') {
-            when {
-                not {
-                    branch 'main'
-                }
-            }
             steps {
                 bat 'mvn test'
             }
         }
 
         stage('SonarQube Analysis') {
-            when {
-                not {
-                    branch 'main'
-                }
-            }
             steps {
                 withSonarQubeEnv('MySonar') {
                     bat 'mvn sonar:sonar -Dsonar.projectKey=sb-petclinic -Dsonar.projectName=sb-petclinic -Dsonar.host.url=http://localhost:9000'
