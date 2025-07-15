@@ -92,11 +92,7 @@
   --bs-body-line-height: 1.5;
   --bs-body-color: #212529;
   --bs-body-color-rgb: 33, 37, 41;
-<<<<<<< HEAD
-  --bs-body-bg: #d60808;
-=======
-  --bs-body-bg: #c63737;
->>>>>>> parent of 4e25854 (changed bg colour to white)
+  --bs-body-bg: #854848;
   --bs-body-bg-rgb: 255, 255, 255;
   --bs-emphasis-color: #000;
   --bs-emphasis-color-rgb: 0, 0, 0;
